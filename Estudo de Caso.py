@@ -4,13 +4,13 @@ from random import random
 
 caminhoGrafo = "live_journal.txt"
 
-'''grafoMatriz = Grafos.MatrizAdjacencia(caminhoGrafo)'''
+grafoMatriz = Grafos.MatrizAdjacencia(caminhoGrafo)
 memMatriz = float(input("Digite a quantidade de memoria utilizada (MB): "))
 grafoLista = Grafos.ListaAdjacencia(caminhoGrafo)
 memLista = float(input("Digite a quantidade de memoria utilizada (MB): ")) - memMatriz
 
 
-def Tempo_BFS(Grafo,n = 5):
+def Tempo_BFS(Grafo,n = 1000):
     numVert = Grafo.numeroVertices()
     delta = numVert/n
     vertTeste = [int(delta*i)-1 for i in range(1,n+1)]
@@ -20,7 +20,7 @@ def Tempo_BFS(Grafo,n = 5):
     final = time()    
     return (final-inicio)
     
-def Tempo_DFS(Grafo,n = 5):
+def Tempo_DFS(Grafo,n = 1000):
     numVert = Grafo.numeroVertices()
     delta = numVert/n
     vertTeste = [int(delta*i)-1 for i in range(1,n+1)]
@@ -45,7 +45,7 @@ def Pai_BFS(Grafo,v,o):
 def Pai_DFS(Grafo,v,o):
     """Retorna o pai[v] na arvore induzida pela DFS quando iniciada no
     vertice 'o'."""
-    with open("BFS.txt","r") as arvGer:
+    with open("DFS.txt","r") as arvGer:
         next(arvGer)# Pulando a primeira linha
         vertice = 1
         for linha in arvGer:
@@ -85,41 +85,33 @@ def diametro(Grafo):
 
 #tempoBFSmat = Tempo_BFS(grafoMatriz)
 tempoBFSmat = 0.0
-tempoBFSlist = 0
-print(1)
+tempoBFSlist = Tempo_BFS(memLista)
+
 
 #tempoDFSmat = Tempo_DFS(grafoMatriz)
 tempoDFSmat = 0.0
-tempoDFSlist = 0
-print(2)
+tempoDFSlist = Tempo_DFS(memLista)
+
 
 # Linha: origem, Coluna: v, [Linha,Coluna]: pai[v]
 pais_BFS = [[0 for i in range(5)] for j in range(5)]
-print(3)
 pais_DFS = [[0 for i in range(5)] for j in range(5)]
-print(4)
 origem = [1,2,3,4,5]
 v = [10,20,30,40,50]
 print(5)
 for i in range(5):
-    t1=time()
     grafoLista.BFS(i)
-    tempoBFSlist+= (time()-t1)
-    t1=time()
     grafoLista.DFS(i)
-    tempoDFSlist+= time()-t1
     for j in range(5):
         pais_BFS[i][j] = Pai_BFS(grafoLista,v[j],origem[i])
         pais_DFS[i][j] = Pai_DFS(grafoLista,v[j],origem[i])
-print(6)
+
 
 infoCompCon = conexasEstatistica(grafoLista)
-print(7)
 infoGrau = grauEstatistica(grafoLista)
-print(8)
 
-diametro = 0
-'''diametro(grafoLista)'''
+
+diametro = diametro(grafoLista)
         
 with open("Estudos de Caso.txt","w") as estudo:
     estudo.write("Memoria:\n")
