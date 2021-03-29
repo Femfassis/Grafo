@@ -1,1 +1,1 @@
-  Biblioteca de Grafos
+  Biblioteca de Grafos em Python
